@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<Workflow xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:noNamespaceSchemaLocation="workflow.xsd">
+
+  <!-- This is the step for GCD.exe step -->
+  <Step>
+    <Name>DoDStep</Name>
+    <Type>cmd</Type>
+    <Cwd>c:\path\to\gcd\</Cwd>
+    <Cmd>gcd.exe</Cmd>
+    <Args>
+      <Arg id="Threshold" type="Numeric"></Arg>
+      <Arg id="InputRaster" type="Path"/>
+      <Arg id="RoughnessRaster" type="Path"/>
+      <Arg id="OutputRaster" type="Path"/>
+    </Args>
+  </Step>
+
+  <!-- This is the step for python step -->
+  <Step>
+    <Name>GetStats</Name>
+    <Type>python</Type>
+    <Module>PythonModuleName</Module>
+    <Args>
+      <Arg id="Threshold" type="Numeric"></Arg>
+      <Arg id="InputRaster" type="Path"/>
+      <Arg id="RoughnessRaster" type="Path"/>
+      <Arg id="OutputRaster" type="Path"/>
+    </Args>
+  </Step>
+
+
+</Workflow>

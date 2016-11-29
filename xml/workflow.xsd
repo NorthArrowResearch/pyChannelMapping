@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:element name="Workflow" type="WorkflowType"/>
+
+  <!-- Workflow is the topmost node -->
+  <xs:complexType name="WorkflowType">
+    <xs:sequence>
+      <xs:element type="StepType" name="Step" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <!--The step is the basic unit of operation here -->
+  <xs:complexType name="StepType">
+    <xs:sequence>
+      <xs:element name="Name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="DoDStep"/>
+            <xs:enumeration value="GetStats"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="Type">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="cmd"/>
+            <xs:enumeration value="python"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="Cwd" minOccurs="0"/>
+      <xs:element type="xs:string" name="Cmd" minOccurs="0"/>
+      <xs:element type="xs:string" name="Module" minOccurs="0"/>
+      <xs:element type="ArgsType" name="Args"/>
+    </xs:sequence>
+  </xs:complexType>
+
+
+  <!-- Args are what we pass to our function. The function could be python or an execuatable -->
+  <xs:complexType name="ArgType">
+    <xs:simpleContent>
+      <xs:extension base="xs:string">
+        <xs:attribute type="xs:string" name="id" use="required"/>
+        <xs:attribute type="xs:string" name="type" use="required"/>
+      </xs:extension>
+    </xs:simpleContent>
+  </xs:complexType>
+
+  <xs:complexType name="ArgsType">
+    <xs:sequence>
+      <xs:element type="ArgType" name="Arg" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+</xs:schema>
